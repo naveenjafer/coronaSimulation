@@ -19,7 +19,7 @@ class CityMap():
             hospital_node - 7 - 5
             misc_node - 8 - 5
         '''
-        self.map = []
+        self.grid = []
         self.dim = config["dim"]
         self.fillFraction = config["fillFraction"]
         self.config = {
@@ -54,7 +54,7 @@ class CityMap():
                 "avg_den" : 10
             }
         }
-        self.map = copy.deepcopy(util.generateMap(self.dim))
+        self.grid = copy.deepcopy(util.generateMap(self.dim))
 
     def placeNodes(self):
         for key in self.config:
@@ -72,15 +72,15 @@ class CityMap():
             while count != target:
                 x_rand = randint(0,self.dim-1)
                 y_rand = randint(0,self.dim-1)
-                if self.map[x_rand][y_rand] == 0:
-                    self.map[x_rand][y_rand] = {"id" : self.config[key]["id"], "count" : int(distArray[count]) }
+                if self.grid[x_rand][y_rand] == 0:
+                    self.grid[x_rand][y_rand] = {"id" : self.config[key]["id"], "count" : int(distArray[count]) }
                     count = count + 1
 
     def verifyNodeFraction(self):
         count = 0
         for i in range(self.dim):
             for j in range(self.dim):
-                if self.map[i][j] != 0:
+                if self.grid[i][j] != 0:
                     count = count + 1
         return count
 
@@ -88,9 +88,9 @@ class CityMap():
         stats_obj = {}
         for i in range(self.dim):
             for j in range(self.dim):
-                if self.map[i][j] != 0:
-                    if self.map[i][j]["id"] in stats_obj.keys():
-                        stats_obj[self.map[i][j]["id"]] = stats_obj[self.map[i][j]["id"]] + self.map[i][j]["count"]
+                if self.grid[i][j] != 0:
+                    if self.grid[i][j]["id"] in stats_obj.keys():
+                        stats_obj[self.grid[i][j]["id"]] = stats_obj[self.grid[i][j]["id"]] + self.grid[i][j]["count"]
                     else:
-                        stats_obj[self.map[i][j]["id"]] = self.map[i][j]["count"]
+                        stats_obj[self.grid[i][j]["id"]] = self.grid[i][j]["count"]
         return stats_obj

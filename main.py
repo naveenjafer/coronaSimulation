@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
     b = busMap.BusMap(config)
     b.placeNodes()
+    b.createRoutes()
     print(b.verifyNodeFraction())
 
     
